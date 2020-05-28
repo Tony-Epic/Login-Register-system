@@ -1,29 +1,95 @@
 package BO;
-import Main.Main;
+
 import DAO.UserDAOImplementation;
-public class Validation {
-	
-	public static boolean validateUserame(String username)
+import Main.Main;
+
+public class Validation 
+{
+	public static boolean usernameRegisterValidation(String username)
 	{
-		for(int i=0;i<UserDAOImplementation.users.size();i++)
+		UserDAOImplementation user = new UserDAOImplementation();
+		
+		try
 		{
-			if(username.equals(UserDAOImplementation.users.get(i).getUsername()))
+			for (int i = 0; i < user.getUsers().size(); i++)
 			{
-				return false;
+				if (username.equals(user.getUsers().get(i).getUsername()))
+				{
+					return false;
+				}
 			}
 		}
-		return true;
 		
+		catch (Exception e)
+		{
+			
+			Main.errorMessage();
+		}
+	
+		return true;
 	}
+	
+	public static boolean usernameLoginValidation(String username)
+	{
+		UserDAOImplementation user = new UserDAOImplementation();
+		
+		try
+		{
+			for (int i = 0; i < user.getUsers().size(); i++)
+			{
+				if (username.equals(user.getUsers().get(i).getUsername()))
+				{
+					return true;
+				}
+			}
+		}
+		
+		catch (Exception e)
+		{
+			
+			Main.errorMessage();
+		}
+	
+		return false;
+	}
+	
 	public static boolean validatePasswordLength(String password)
 	{
-		if(password.length()<6)
+		if (password.length() < 6)
 		{
 			return false;
-			
 		}
-		return true;
 		
+		else
+		{
+			return true;
+		}	
 	}
-
+	
+	public static boolean passwordValidation(String username, String password)
+	{
+		UserDAOImplementation user = new UserDAOImplementation();
+		
+		try
+		{
+			for (int i = 0; i < user.getUsers().size(); i++)
+			{
+				if (username.equals(user.getUsers().get(i).getUsername()))
+				{
+					if (password.equals(user.getUsers().get(i).getPassword()))
+					{
+						return true;
+					}
+				}
+			}
+		}
+		
+		catch (Exception e)
+		{
+			
+			Main.errorMessage();
+		}
+		
+		return false;
+	}
 }

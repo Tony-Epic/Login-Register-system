@@ -7,17 +7,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import DTO.User;
+import DTO.UserRegister;
 
 public class UserDAOImplementation {
-	public static ArrayList<User> users = new ArrayList<User>();
+	
 	
 
 	
 	Connection connection = ConnectionManager.getInstance().getConnection();
-	public ArrayList<User> getUsers() throws SQLException {
+	public ArrayList<UserRegister> getUsers() throws SQLException {
 
 		// create an array list to hold students
+		 ArrayList<UserRegister> users = new ArrayList<UserRegister>();
 		
 		// create an SELECT SQL query
 		String query = "SELECT * FROM users";
@@ -34,7 +35,7 @@ public class UserDAOImplementation {
 
 			// add students to the arrayList
 			while (rs.next()) {
-				users.add(new User( rs.getString("Ime"), rs.getString("Prezime"),
+				users.add(new UserRegister( rs.getString("Ime"), rs.getString("Prezime"),
 						rs.getString("Username"), rs.getString("Password")));
 
 			
@@ -61,6 +62,32 @@ public class UserDAOImplementation {
 			// execute the query
 			statement.executeUpdate();
 			System.out.println("Uspjesno dodano");
+		}
+	}
+	public void updateUser(String ime, String prezime, String username) throws SQLException
+	{
+		String query = "UPDATE useri SET Ime = ?, Prezime = ? WHERE username = '" + username + "'";
+		
+		try (PreparedStatement statement = connection.prepareStatement(query)) 
+		{
+			statement.setString(1, ime);
+			statement.setString(2, prezime);
+
+			statement.executeUpdate();
+
+			System.out.println("User updated.");
+		}
+	}
+	
+	public void deleteUser(String username) throws SQLException
+	{
+		String query = "DELETE FROM useri WHERE username = '" + username + "'";
+		
+		try (PreparedStatement statement = connection.prepareStatement(query)) 
+		{
+			statement.executeUpdate();
+
+			System.out.println("User obrisan");
 		}
 	}
 	

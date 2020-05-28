@@ -5,18 +5,20 @@ import BO.Validation;
 import Main.Main;
 import DAO.UserDAOImplementation;
 
-public class User {
+public class UserRegister {
 	private String ime;
 	private String prezime;
 	private String username;
 	private String password;
+	private boolean successfull;
 	
-	public User(String ime, String prezime, String username, String password) {
+	public UserRegister(String ime, String prezime, String username, String password) {
 		super();
 		setIme(ime);
 		setPrezime(prezime);
 		setUsername(username);
 		setPassword(password);
+		setSuccessfull(true);
 		
 	}
 
@@ -41,14 +43,14 @@ public class User {
 	}
 
 	public void setUsername(String username) {
-		if(Validation.validateUserame(username)==true)
+		if(Validation.usernameRegisterValidation(username)==true)
 		{
 			this.username = username;
 		}
 		else
 		{
 			Main.errorMessage();
-			Main.menu();
+			Main.start();
 		}
 	}
 
@@ -65,9 +67,18 @@ public class User {
 		else
 		{
 			Main.errorMessage();
-			Main.menu();
+			Main.start();
 		}
 	}
+
+	public boolean isSuccessfull() {
+		return successfull;
+	}
+
+	public void setSuccessfull(boolean successfull) {
+		this.successfull = successfull;
+	}
+	
 	
 	
 
